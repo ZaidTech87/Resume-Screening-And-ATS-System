@@ -21,49 +21,70 @@ font-family:'Poppins',sans-serif;
 }
 
 body{
-
 background:linear-gradient(135deg,#4F46E5,#2563EB);
 min-height:100vh;
 padding:20px;
+}
 
+/* ---------- Top bar ---------- */
+.topbar{
+max-width:900px;
+margin:0 auto 15px auto;
+display:flex;
+justify-content:flex-end;
+align-items:center;
+gap:10px;
+}
+
+.topbar button{
+width:auto;
+padding:8px 16px;
+font-size:14px;
+border-radius:8px;
+background:white;
+color:#2563EB;
+font-weight:600;
+}
+
+.topbar .user-chip{
+background:white;
+color:#1E293B;
+padding:8px 16px;
+border-radius:8px;
+font-size:14px;
+font-weight:600;
+display:none;
+align-items:center;
+gap:8px;
 }
 
 .container{
-
 max-width:900px;
 margin:auto;
 background:white;
 border-radius:20px;
 padding:30px;
 box-shadow:0 15px 40px rgba(0,0,0,.15);
-
 }
 
 h1{
-
 text-align:center;
 color:#1E293B;
 margin-bottom:25px;
-
 }
 
 .form-group{
-
 margin-bottom:25px;
-
 }
 
 label{
-
 display:block;
 margin-bottom:10px;
 font-weight:600;
 color:#334155;
-
 }
 
 textarea{
-
 width:100%;
 height:180px;
 resize:vertical;
@@ -73,18 +94,14 @@ border:1px solid #CBD5E1;
 font-size:15px;
 outline:none;
 transition:.3s;
-
 }
 
 textarea:focus{
-
 border-color:#2563EB;
 box-shadow:0 0 0 4px rgba(37,99,235,.15);
-
 }
 
 .upload-area{
-
 border:2px dashed #2563EB;
 border-radius:15px;
 padding:35px;
@@ -92,35 +109,25 @@ text-align:center;
 cursor:pointer;
 transition:.3s;
 background:#F8FAFC;
-
 }
 
 .upload-area:hover{
-
 background:#EFF6FF;
-
 }
 
 .upload-area.dragover{
-
 background:#DBEAFE;
-
 }
 
 .upload-area p{
-
 color:#475569;
-
 }
 
 input[type=file]{
-
 display:none;
-
 }
 
 button{
-
 width:100%;
 padding:15px;
 font-size:17px;
@@ -131,32 +138,24 @@ background:#2563EB;
 color:white;
 cursor:pointer;
 transition:.3s;
-
 }
 
 button:hover{
-
 background:#1D4ED8;
 transform:translateY(-2px);
-
 }
 
 button:active{
-
 transform:scale(.98);
-
 }
 
 #loading{
-
 display:none;
 margin-top:20px;
 text-align:center;
-
 }
 
 .spinner{
-
 width:45px;
 height:45px;
 border:5px solid #E2E8F0;
@@ -164,21 +163,15 @@ border-top:5px solid #2563EB;
 border-radius:50%;
 margin:auto;
 animation:spin 1s linear infinite;
-
 }
 
 @keyframes spin{
-
 100%{
-
 transform:rotate(360deg);
-
 }
-
 }
 
 .card{
-
 margin-top:20px;
 padding:20px;
 border-radius:15px;
@@ -186,46 +179,33 @@ background:#F8FAFC;
 border-left:6px solid #2563EB;
 animation:fade .4s;
 word-wrap:break-word;
-
 }
 
 @keyframes fade{
-
 from{
-
 opacity:0;
 transform:translateY(15px);
-
 }
-
 to{
-
 opacity:1;
 transform:translateY(0);
-
 }
-
 }
 
 .score{
-
 margin:15px 0;
 height:14px;
 background:#E2E8F0;
 border-radius:20px;
 overflow:hidden;
-
 }
 
 .progress{
-
 height:100%;
 background:linear-gradient(90deg,#22C55E,#16A34A);
-
 }
 
 .badge{
-
 display:inline-block;
 padding:6px 12px;
 border-radius:30px;
@@ -233,55 +213,190 @@ background:#DCFCE7;
 color:#15803D;
 font-weight:600;
 margin-top:10px;
-
 }
 
 ul{
-
 padding-left:18px;
-
 }
 
 .file-list{
-
 margin-top:15px;
 font-size:14px;
 color:#555;
+}
 
+/* ---------- Auth Modal ---------- */
+.modal-overlay{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(15,23,42,.55);
+display:flex;
+align-items:center;
+justify-content:center;
+z-index:999;
+}
+
+.modal-box{
+background:white;
+width:100%;
+max-width:400px;
+border-radius:16px;
+padding:30px;
+position:relative;
+box-shadow:0 20px 50px rgba(0,0,0,.25);
+animation:fade .3s;
+}
+
+.modal-close{
+position:absolute;
+top:14px;
+right:16px;
+width:32px;
+height:32px;
+border-radius:50%;
+background:#F1F5F9;
+color:#334155;
+font-size:18px;
+font-weight:700;
+cursor:pointer;
+display:flex;
+align-items:center;
+justify-content:center;
+line-height:1;
+padding:0;
+transition:.2s;
+}
+
+.modal-close:hover{
+background:#E2E8F0;
+transform:none;
+}
+
+.modal-tabs{
+display:flex;
+margin-bottom:22px;
+border-bottom:2px solid #E2E8F0;
+}
+
+.modal-tab{
+flex:1;
+text-align:center;
+padding:10px 0;
+cursor:pointer;
+font-weight:600;
+color:#94A3B8;
+border-bottom:3px solid transparent;
+margin-bottom:-2px;
+transition:.2s;
+background:none;
+width:auto;
+}
+
+.modal-tab.active{
+color:#2563EB;
+border-bottom:3px solid #2563EB;
+}
+
+.modal-tab:hover{
+transform:none;
+background:none;
+}
+
+.auth-form{
+display:none;
+flex-direction:column;
+gap:14px;
+}
+
+.auth-form.active{
+display:flex;
+}
+
+.auth-form input{
+padding:12px 14px;
+border-radius:10px;
+border:1px solid #CBD5E1;
+font-size:14px;
+outline:none;
+}
+
+.auth-form input:focus{
+border-color:#2563EB;
+box-shadow:0 0 0 4px rgba(37,99,235,.15);
+}
+
+.auth-form button{
+margin-top:6px;
+}
+
+.auth-error{
+color:#DC2626;
+font-size:13px;
+display:none;
+}
+
+.modal-skip-note{
+text-align:center;
+font-size:12px;
+color:#94A3B8;
+margin-top:16px;
+}
+
+/* ---------- Profile Panel ---------- */
+.profile-panel{
+max-width:900px;
+margin:0 auto 15px auto;
+background:white;
+border-radius:16px;
+padding:20px 25px;
+display:none;
+box-shadow:0 10px 25px rgba(0,0,0,.1);
+}
+
+.profile-panel h3{
+color:#1E293B;
+margin-bottom:12px;
+}
+
+.history-item{
+padding:12px 0;
+border-bottom:1px solid #E2E8F0;
+font-size:14px;
+color:#334155;
+display:flex;
+justify-content:space-between;
+gap:10px;
+flex-wrap:wrap;
+}
+
+.history-item:last-child{
+border-bottom:none;
+}
+
+.history-score{
+font-weight:700;
+color:#16A34A;
 }
 
 @media(max-width:768px){
-
 .container{
-
 padding:18px;
-
 }
-
 h1{
-
 font-size:26px;
-
 }
-
 textarea{
-
 height:160px;
-
 }
-
 .upload-area{
-
 padding:25px;
-
 }
-
 button{
-
 font-size:16px;
-
 }
-
 }
 
 </style>
@@ -289,48 +404,78 @@ font-size:16px;
 
 <body>
 
+<!-- ============ AUTH MODAL ============ -->
+<div class="modal-overlay" id="authModal">
+  <div class="modal-box">
+    <button class="modal-close" id="modalCloseBtn" title="Skip and continue without login">&times;</button>
+
+    <div class="modal-tabs">
+      <div class="modal-tab active" id="tabSignIn" onclick="switchTab('signin')">Sign In</div>
+      <div class="modal-tab" id="tabSignUp" onclick="switchTab('signup')">Sign Up</div>
+    </div>
+
+    <!-- Sign In Form -->
+    <form class="auth-form active" id="signinForm" onsubmit="return handleLogin(event)">
+      <input type="email" id="signinEmail" placeholder="Email" required>
+      <input type="password" id="signinPassword" placeholder="Password" required>
+      <p class="auth-error" id="signinError"></p>
+      <button type="submit">Login</button>
+    </form>
+
+    <!-- Sign Up Form -->
+    <form class="auth-form" id="signupForm" onsubmit="return handleSignup(event)">
+      <input type="text" id="signupName" placeholder="Full Name" required>
+      <input type="email" id="signupEmail" placeholder="Email" required>
+      <input type="password" id="signupPassword" placeholder="Password (min 6 chars)" minlength="6" required>
+      <p class="auth-error" id="signupError"></p>
+      <button type="submit">Create Account</button>
+    </form>
+
+    <p class="modal-skip-note">Bina sign in kiye bhi use kar sakte ho — bas &times; par click karein</p>
+  </div>
+</div>
+
+<!-- ============ TOP BAR ============ -->
+<div class="topbar">
+  <div class="user-chip" id="userChip">
+    👤 <span id="userChipName"></span>
+    <span style="cursor:pointer;color:#DC2626;margin-left:8px;" onclick="logout()">Logout</span>
+  </div>
+  <button id="loginTopBtn" onclick="openModal()" style="display:none;">Sign In / Sign Up</button>
+</div>
+
+<!-- ============ PROFILE / WORK HISTORY ============ -->
+<div class="profile-panel" id="profilePanel">
+  <h3>📋 Aapki Work History</h3>
+  <div id="historyList"><p style="color:#94A3B8;font-size:14px;">Koi history nahi mili.</p></div>
+</div>
+
 <div class="container">
 
 <h1>📄 AI Resume Matcher</h1>
 
 <div class="form-group">
-
 <label>Job Description</label>
-
 <textarea id="jd" placeholder="Paste the Job Description here..."></textarea>
-
 </div>
 
 <div class="form-group">
-
 <label>Upload Resume(s)</label>
-
 <div class="upload-area" id="dropArea">
-
 <p>📂 Drag & Drop Resume(s)</p>
-
 <p>or Click to Browse</p>
-
 <input type="file" id="resumes" multiple accept=".pdf,.docx">
-
 <div class="file-list" id="fileList"></div>
-
 </div>
-
 </div>
 
 <button onclick="analyzeResumes()">
-
 Analyze Resumes
-
 </button>
 
 <div id="loading">
-
 <div class="spinner"></div>
-
 <p style="margin-top:12px;">Analyzing Resume...</p>
-
 </div>
 
 <div id="results"></div>
@@ -339,101 +484,246 @@ Analyze Resumes
 
 <script>
 
-const API_URL="http://localhost:8000/analyze";
+const API_URL="http://localhost:8000";
 
+// ---------------- File Upload UI ----------------
 const dropArea=document.getElementById("dropArea");
-
 const input=document.getElementById("resumes");
-
 const fileList=document.getElementById("fileList");
 
 dropArea.onclick=()=>input.click();
-
 input.onchange=showFiles;
 
 dropArea.addEventListener("dragover",e=>{
-
 e.preventDefault();
-
 dropArea.classList.add("dragover");
-
 });
 
 dropArea.addEventListener("dragleave",()=>{
-
 dropArea.classList.remove("dragover");
-
 });
 
 dropArea.addEventListener("drop",e=>{
-
 e.preventDefault();
-
 dropArea.classList.remove("dragover");
-
 input.files=e.dataTransfer.files;
-
 showFiles();
-
 });
 
 function showFiles(){
-
 let html="";
-
 for(let file of input.files){
-
 html+="📄 "+file.name+"<br>";
-
 }
-
 fileList.innerHTML=html;
-
 }
 
+// ---------------- AUTH LOGIC ----------------
+const authModal=document.getElementById("authModal");
+
+function openModal(){
+authModal.style.display="flex";
+}
+
+function closeModal(){
+authModal.style.display="none";
+}
+
+document.getElementById("modalCloseBtn").onclick=closeModal;
+
+function switchTab(tab){
+document.getElementById("tabSignIn").classList.toggle("active",tab==="signin");
+document.getElementById("tabSignUp").classList.toggle("active",tab==="signup");
+document.getElementById("signinForm").classList.toggle("active",tab==="signin");
+document.getElementById("signupForm").classList.toggle("active",tab==="signup");
+}
+
+function getToken(){
+return localStorage.getItem("resume_matcher_token");
+}
+
+function setToken(token){
+localStorage.setItem("resume_matcher_token",token);
+}
+
+function clearToken(){
+localStorage.removeItem("resume_matcher_token");
+}
+
+async function handleLogin(e){
+e.preventDefault();
+const errorEl=document.getElementById("signinError");
+errorEl.style.display="none";
+
+const email=document.getElementById("signinEmail").value.trim();
+const password=document.getElementById("signinPassword").value;
+
+try{
+const res=await fetch(`${API_URL}/login`,{
+method:"POST",
+headers:{"Content-Type":"application/json"},
+body:JSON.stringify({email,password})
+});
+const data=await res.json();
+if(!res.ok){
+errorEl.textContent=data.detail || "Login failed";
+errorEl.style.display="block";
+return false;
+}
+setToken(data.access_token);
+closeModal();
+await loadProfile();
+}catch(err){
+errorEl.textContent="Server se connect nahi ho paaya";
+errorEl.style.display="block";
+}
+return false;
+}
+
+async function handleSignup(e){
+e.preventDefault();
+const errorEl=document.getElementById("signupError");
+errorEl.style.display="none";
+
+const name=document.getElementById("signupName").value.trim();
+const email=document.getElementById("signupEmail").value.trim();
+const password=document.getElementById("signupPassword").value;
+
+try{
+const res=await fetch(`${API_URL}/signup`,{
+method:"POST",
+headers:{"Content-Type":"application/json"},
+body:JSON.stringify({name,email,password})
+});
+const data=await res.json();
+if(!res.ok){
+errorEl.textContent=data.detail || "Signup failed";
+errorEl.style.display="block";
+return false;
+}
+setToken(data.access_token);
+closeModal();
+await loadProfile();
+}catch(err){
+errorEl.textContent="Server se connect nahi ho paaya";
+errorEl.style.display="block";
+}
+return false;
+}
+
+function logout(){
+clearToken();
+document.getElementById("userChip").style.display="none";
+document.getElementById("loginTopBtn").style.display="block";
+document.getElementById("profilePanel").style.display="none";
+}
+
+async function loadProfile(){
+const token=getToken();
+if(!token){
+document.getElementById("loginTopBtn").style.display="block";
+document.getElementById("userChip").style.display="none";
+document.getElementById("profilePanel").style.display="none";
+return;
+}
+
+try{
+const meRes=await fetch(`${API_URL}/me`,{
+headers:{"Authorization":`Bearer ${token}`}
+});
+if(!meRes.ok){
+// token expired/invalid
+clearToken();
+document.getElementById("loginTopBtn").style.display="block";
+document.getElementById("userChip").style.display="none";
+document.getElementById("profilePanel").style.display="none";
+return;
+}
+const me=await meRes.json();
+document.getElementById("userChipName").textContent=me.name;
+document.getElementById("userChip").style.display="flex";
+document.getElementById("loginTopBtn").style.display="none";
+
+await loadHistory(token);
+}catch(err){
+console.error(err);
+}
+}
+
+async function loadHistory(token){
+const panel=document.getElementById("profilePanel");
+const listEl=document.getElementById("historyList");
+try{
+const res=await fetch(`${API_URL}/history`,{
+headers:{"Authorization":`Bearer ${token}`}
+});
+const data=await res.json();
+if(Array.isArray(data) && data.length>0){
+listEl.innerHTML=data.map(item=>`
+<div class="history-item">
+<span>${item.candidate_name || "Candidate"} - ${new Date(item.created_at).toLocaleDateString()}</span>
+<span class="history-score">${item.match_score ?? "-"}% match</span>
+</div>
+`).join("");
+}else{
+listEl.innerHTML=`<p style="color:#94A3B8;font-size:14px;">Abhi tak koi analysis history nahi hai.</p>`;
+}
+panel.style.display="block";
+}catch(err){
+console.error(err);
+}
+}
+
+// Page load hote hi: agar pehle se login nahi hai to modal dikhao
+window.addEventListener("DOMContentLoaded",async()=>{
+const token=getToken();
+if(token){
+closeModal();
+await loadProfile();
+}else{
+openModal();
+}
+});
+
+// ---------------- RESUME ANALYSIS ----------------
 async function analyzeResumes(){
 
 const jd=document.getElementById("jd").value.trim();
 
 if(jd==""||input.files.length==0){
-
 alert("Please enter Job Description and upload resumes.");
-
 return;
-
 }
 
-const loading=document.getElementById("loading");
-
+const loadingEl=document.getElementById("loading");
 const results=document.getElementById("results");
-
 results.innerHTML="";
-
-loading.style.display="block";
+loadingEl.style.display="block";
 
 const formData=new FormData();
-
 formData.append("job_description",jd);
 
 for(let file of input.files){
-
 formData.append("resumes",file);
+}
 
+const headers={};
+const token=getToken();
+if(token){
+headers["Authorization"]=`Bearer ${token}`;
 }
 
 try{
 
-const response=await fetch(API_URL,{
-
+const response=await fetch(`${API_URL}/analyze`,{
 method:"POST",
-
+headers,
 body:formData
-
 });
 
 const result=await response.json();
 
-loading.style.display="none";
+loadingEl.style.display="none";
 
 if(result.status==="success"){
 
@@ -442,63 +732,43 @@ result.data.forEach(item=>{
 results.innerHTML+=`
 
 <div class="card">
-
 <h2>${item.candidate_name || "Candidate"}</h2>
-
 <div class="score">
-
 <div class="progress" style="width:${item.match_score}%"></div>
-
 </div>
-
 <h3>${item.match_score}% Match</h3>
-
 <p><b>Matching Skills</b></p>
-
 <ul>
-
 ${item.matching_skills.map(s=>`<li>${s}</li>`).join("")}
-
 </ul>
-
 <br>
-
 <p><b>Missing Skills</b></p>
-
 <ul>
-
 ${item.missing_skills.map(s=>`<li>${s}</li>`).join("")}
-
 </ul>
-
 <div class="badge">
-
 ${item.verdict}
-
 </div>
-
 </div>
 
 `;
 
 });
 
+// Agar user logged in hai, to history refresh kar do (naya analysis add hua)
+if(token){
+await loadHistory(token);
+}
+
 }else{
-
 alert(result.message);
-
 }
 
 }catch(error){
-
-loading.style.display="none";
-
+loadingEl.style.display="none";
 alert("Server Error");
-
 console.error(error);
-
 }
-
 }
 
 </script>
