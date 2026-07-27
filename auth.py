@@ -2,9 +2,9 @@
 # Password hashing + JWT token banana/verify karna
 
 import os
+import bcrypt
 from datetime import datetime, timedelta, timezone
 from jose import jwt, JWTError
-from passlib.context import CryptContext
 from fastapi import Depends, HTTPException
 from fastapi.security import OAuth2PasswordBearer
 from sqlalchemy.orm import Session
@@ -16,19 +16,21 @@ SECRET_KEY = os.getenv("SECRET_KEY", "please-change-this-secret-key")
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 60 * 24 * 7  # 7 din tak login yaad rahega
 
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
-
 # auto_error=False -> agar token nahi bheja to error nahi, None milega
 # isse app WITHOUT login bhi kaam karta rahega (cross/close button waala flow)
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login", auto_error=False)
 
 
 def hash_password(password: str) -> str:
-    return pwd_context.hash(password)
+    # bcrypt sirf 72 bytes tak hi support karta hai, isliye safety ke liye truncate
+    pwd_bytes = password.encode("utf-8")[:72]
+    hashed = bcrypt.hashpw(pwd_bytes, bcrypt.gensalt())
+    return hashed.decode("utf-8")
 
 
 def verify_password(plain_password: str, hashed_password: str) -> bool:
-    return pwd_context.verify(plain_password, hashed_password)
+    pwd_bytes = plain_password.encode("utf-8")[:72]
+    return bcrypt.checkpw(pwd_bytes, hashed_password.encode("utf-8"))
 
 
 def create_access_token(data: dict) -> str:

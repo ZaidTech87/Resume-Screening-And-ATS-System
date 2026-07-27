@@ -2,6 +2,12 @@
 import os
 import json
 from dotenv import load_dotenv
+
+# IMPORTANT: .env file sabse pehle load honi chahiye, kisi bhi local module
+# (database, models, auth) import hone se pehle. Warna wo modules os.getenv()
+# call karte waqt khaali/empty values utha lete hain (jaise DB_PASSWORD="").
+load_dotenv()
+
 from fastapi import FastAPI, UploadFile, File, Form, HTTPException, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from groq import Groq
@@ -20,7 +26,6 @@ from auth import (
     get_optional_user,
 )
 
-load_dotenv()
 my_api_key = os.getenv("GROQ_API_KEY")
 if not my_api_key:
     raise ValueError("GROQ_API_KEY Missing!")

@@ -328,6 +328,44 @@ border-color:#2563EB;
 box-shadow:0 0 0 4px rgba(37,99,235,.15);
 }
 
+.password-field{
+position:relative;
+display:flex;
+}
+
+.password-field input{
+width:100%;
+padding-right:42px;
+}
+
+.password-toggle{
+position:absolute;
+right:0;
+top:0;
+height:100%;
+width:42px;
+background:none;
+border:none;
+cursor:pointer;
+display:flex;
+align-items:center;
+justify-content:center;
+color:#94A3B8;
+padding:0;
+transition:.2s;
+}
+
+.password-toggle:hover{
+color:#2563EB;
+transform:none;
+background:none;
+}
+
+.password-toggle svg{
+width:20px;
+height:20px;
+}
+
 .auth-form button{
 margin-top:6px;
 }
@@ -417,7 +455,12 @@ font-size:16px;
     <!-- Sign In Form -->
     <form class="auth-form active" id="signinForm" onsubmit="return handleLogin(event)">
       <input type="email" id="signinEmail" placeholder="Email" required>
-      <input type="password" id="signinPassword" placeholder="Password" required>
+      <div class="password-field">
+        <input type="password" id="signinPassword" placeholder="Password" required>
+        <button type="button" class="password-toggle" onclick="togglePassword('signinPassword', this)" aria-label="Show password">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8Z"/><circle cx="12" cy="12" r="3"/></svg>
+        </button>
+      </div>
       <p class="auth-error" id="signinError"></p>
       <button type="submit">Login</button>
     </form>
@@ -426,7 +469,12 @@ font-size:16px;
     <form class="auth-form" id="signupForm" onsubmit="return handleSignup(event)">
       <input type="text" id="signupName" placeholder="Full Name" required>
       <input type="email" id="signupEmail" placeholder="Email" required>
-      <input type="password" id="signupPassword" placeholder="Password (min 6 chars)" minlength="6" required>
+      <div class="password-field">
+        <input type="password" id="signupPassword" placeholder="Password (min 6 chars)" minlength="6" required>
+        <button type="button" class="password-toggle" onclick="togglePassword('signupPassword', this)" aria-label="Show password">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8Z"/><circle cx="12" cy="12" r="3"/></svg>
+        </button>
+      </div>
       <p class="auth-error" id="signupError"></p>
       <button type="submit">Create Account</button>
     </form>
@@ -536,6 +584,17 @@ document.getElementById("tabSignIn").classList.toggle("active",tab==="signin");
 document.getElementById("tabSignUp").classList.toggle("active",tab==="signup");
 document.getElementById("signinForm").classList.toggle("active",tab==="signin");
 document.getElementById("signupForm").classList.toggle("active",tab==="signup");
+}
+
+const eyeIcon=`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8Z"/><circle cx="12" cy="12" r="3"/></svg>`;
+const eyeOffIcon=`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-3.24 3.24A9.12 9.12 0 0 1 12 20c-7 0-11-8-11-8a18.5 18.5 0 0 1 4.22-5.94M1 1l22 22"/><path d="M14.12 14.12a3 3 0 1 1-4.24-4.24"/></svg>`;
+
+function togglePassword(inputId,btn){
+const input=document.getElementById(inputId);
+const isHidden=input.type==="password";
+input.type=isHidden?"text":"password";
+btn.innerHTML=isHidden?eyeOffIcon:eyeIcon;
+btn.setAttribute("aria-label",isHidden?"Hide password":"Show password");
 }
 
 function getToken(){
