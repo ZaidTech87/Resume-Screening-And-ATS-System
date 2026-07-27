@@ -10,6 +10,7 @@ load_dotenv()
 
 from fastapi import FastAPI, UploadFile, File, Form, HTTPException, Depends
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse
 from groq import Groq
 from pypdf import PdfReader
 from docx import Document
@@ -28,13 +29,22 @@ from auth import (
 
 my_api_key = os.getenv("GROQ_API_KEY")
 if not my_api_key:
-    raise ValueError("GROQ_API_KEY Missing!")
+    # Crash na karke sirf warning print karte hain, taaki poora app na gir jaye
+    # sirf kyunki ek env var missing hai — Render logs mein clearly dikhega.
+    print("[WARNING] GROQ_API_KEY environment variable set nahi hai! "
+          "/analyze route fail hoga jab tak Render dashboard me isse set na karein.")
 
-client = Groq(api_key=my_api_key)
+client = Groq(api_key=my_api_key) if my_api_key else None
 model = "openai/gpt-oss-120b"
 
-# Tables agar exist nahi karti to bana degi (MySQL database pehle se bani honi chahiye)
-Base.metadata.create_all(bind=engine)
+# Tables agar exist nahi karti to bana degi (MySQL database pehle se bani honi chahiye).
+# Agar DB unreachable hai (galat DB_HOST, ya database public access allow nahi karta),
+# to app crash nahi karega — sirf error log hoga aur DB-related routes fail honge.
+try:
+    Base.metadata.create_all(bind=engine)
+    print("[DB] Tables ready.")
+except Exception as e:
+    print(f"[WARNING] Database se connect nahi ho paaya, DB features kaam nahi karenge: {e}")
 
 app = FastAPI()
 
@@ -46,6 +56,19 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+
+# ---------------------------
+# FRONTEND SERVE KARNA
+# ---------------------------
+FRONTEND_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "index.html")
+
+
+@app.get("/")
+def serve_frontend():
+    """index.html ko root path par serve karta hai, taaki frontend + backend
+    ek hi Render URL se chalein."""
+    return FileResponse(FRONTEND_PATH)
 
 
 # ---------------------------
@@ -147,6 +170,12 @@ async def analyze_resumes(
     Agar user logged in hai to result uski history me MySQL me save ho jaayega.
     """
     try:
+        if client is None:
+            raise HTTPException(
+                status_code=500,
+                detail="GROQ_API_KEY set nahi hai. Render dashboard me Environment Variables me isse add karein.",
+            )
+
         results = []
         for file in resumes:
             resume_text = extract_text_from_file(file)

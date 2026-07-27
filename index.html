@@ -532,7 +532,9 @@ Analyze Resumes
 
 <script>
 
-const API_URL="http://localhost:8000";
+// Same origin se serve ho raha hai (FastAPI khud index.html serve karta hai),
+// isliye relative path use karte hain — local aur Render dono jagah kaam karega
+const API_URL="";
 
 // ---------------- File Upload UI ----------------
 const dropArea=document.getElementById("dropArea");
